@@ -5,4 +5,4 @@ pygments:         true
 # Permalinks
 permalink:        pretty
 
-exclude: [documentation.md]
+exclude: [".gitignore", ".gitmodules", "docs", "LICENSE", "README.md"]
