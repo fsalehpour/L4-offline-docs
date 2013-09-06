@@ -2,7 +2,4 @@
 markdown:         rdiscount
 pygments:         true
 
-# Permalinks
-permalink:        pretty
-
-exclude: [".gitignore", ".gitmodules", "docs", "LICENSE", "README.md"]
+exclude: [".gitignore", ".gitmodules", "docs", "LICENSE", "README.md", "build", "dist"]

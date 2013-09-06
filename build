@@ -1,0 +1,48 @@
+#!/bin/bash
+
+
+# delete all .md files from the project directory except README.md
+
+mv README.md{,.keep}
+rm *.md
+mv README.md.keep README.md
+
+# get the documents from the submodule folder
+
+for f in docs/*.md;
+do
+	if [ "$f" != 'docs/documentation.md' ]; then
+		h="$(head -1 $f | cut -c 3-)"
+
+# add Jekyll front-matter
+echo "---
+layout: default
+title: $h
+base_url: \"./\"
+---" > .tmp
+
+# some links and codes need to be cleaned up
+	cat $f | sed -E 's|\(/docs/([^)#]*)(#[^)]*)?\)|(\1.html\2)|g' | sed -E 's|{{[^}]*}}|{% raw %}&{% endraw %}|g' >> .tmp
+
+	mv .tmp "$(basename $f)"
+
+	fi
+done
+
+# make an index from introduction
+
+if [ -f introduction.md ]; then
+	cp introduction.md index.md
+fi
+
+# run build
+jekyll build
+
+# creat distributable package
+if [ -d dist ]; then
+	rm -rf dist
+fi
+
+mkdir dist
+cp -R _site dist/l4-docs
+(cd dist; zip -r l4-docs.zip l4-docs; rm -rf l4-docs)
