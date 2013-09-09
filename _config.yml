@@ -1,0 +1,5 @@
+# Dependencies
+markdown:         rdiscount
+pygments:         true
+
+exclude: [".gitignore", ".gitmodules", "docs", "LICENSE", "README.md", "build", "dist"]
